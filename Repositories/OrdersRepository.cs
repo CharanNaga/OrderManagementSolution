@@ -71,9 +71,19 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Order>? GetOrderByOrderID(Guid orderID)
+        public async Task<Order?> GetOrderByOrderID(Guid orderID)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Retrieving Order by OrderID...");
+            var order = await _db.Orders.FindAsync(orderID);
+            if (order == null)
+            {
+                _logger.LogWarning($"Order not found with OrderID: {orderID}.");
+            }
+            else
+            {
+                _logger.LogInformation("Order retrieved successfully.");
+            }
+            return order;
         }
 
         public Task<Order> UpdateOrder(Order order)
