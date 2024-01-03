@@ -20,9 +20,15 @@ namespace Repositories
             _logger = logger;
         }
 
-        public Task<OrderItem> AddOrderItem(OrderItem orderItem)
+        public async Task<OrderItem> AddOrderItem(OrderItem orderItem)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Adding Order Item to the database...");
+
+            _db.OrderItems.Add(orderItem);
+            await _db.SaveChangesAsync();
+
+            _logger.LogInformation("Order Item with ID: {OrderItemID} added to the database.", orderItem.OrderItemID);
+            return orderItem;
         }
 
         public Task<bool> DeleteOrderItemByOrderItemID(Guid orderItemID)
