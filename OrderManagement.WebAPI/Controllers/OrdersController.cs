@@ -58,5 +58,19 @@ namespace OrderManagement.WebAPI.Controllers
 
             return Ok(order);
         }
+
+        //POST: api/orders
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult<OrderResponse>> AddOrder(OrderAddRequest orderRequest)
+        {
+            _logger.LogInformation("AddOrder API starts");
+
+            var addedOrder = await _ordersAdderService.AddOrder(orderRequest);
+
+            _logger.LogInformation("AddOrder API ends");
+
+            return CreatedAtAction(nameof(GetOrderByID), new { id = addedOrder.OrderID }, addedOrder);
+        }
     }
 }
