@@ -92,5 +92,25 @@ namespace OrderManagement.WebAPI.Controllers
 
             return Ok(updatedOrder);
         }
+
+        [HttpDelete("{orderID}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteOrder(Guid orderID)
+        {
+            _logger.LogInformation("DeleteOrder API starts");
+
+            var isDeleted = await _ordersDeleterService.DeleteOrderByOrderID(orderID);
+
+            if (!isDeleted)
+            {
+                _logger.LogWarning($"Order with ID {orderID} not found");
+                return NotFound();
+            }
+
+            _logger.LogInformation("DeleteOrder API ends");
+
+            return NoContent();
+        }
     }
 }
