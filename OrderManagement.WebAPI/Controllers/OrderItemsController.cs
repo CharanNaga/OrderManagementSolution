@@ -73,7 +73,7 @@ namespace OrderManagement.WebAPI.Controllers
             return CreatedAtAction(nameof(GetOrderItemByOrderItemID), new { orderItemID = addedOrderItem.OrderItemID }, addedOrderItem);
         }
 
-        //PUT: api/orders/{orderID}/items
+        //PUT: api/orders/{orderID}/items/{orderItemID}
         [HttpPut("{orderItemID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -93,5 +93,25 @@ namespace OrderManagement.WebAPI.Controllers
             return Ok(updatedOrderItem);
         }
 
+        //DELETE: api/orders/{orderID}/items/{orderItemID}
+        [HttpDelete("{orderItemID}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteOrderItem(Guid orderItemID)
+        {
+            _logger.LogInformation("DeleteOrderItem API starts");
+
+            var isDeleted = await _orderItemsDeleterService.DeleteOrderItemByOrderItemID(orderItemID);
+
+            if (!isDeleted)
+            {
+                _logger.LogWarning($"Order item not found for deletion. Order Item ID: {orderItemID}.");
+                return NotFound();
+            }
+
+            _logger.LogInformation("DeleteOrderItem API ends");
+
+            return NoContent();
+        }
     }
 }
