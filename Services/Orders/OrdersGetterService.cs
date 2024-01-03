@@ -23,9 +23,23 @@ namespace Services.Orders
             _orderItemsGetterService = orderItemsGetterService;
             _logger = logger;
         }
-        public Task<List<OrderResponse>> GetAllOrders()
+        public async Task<List<OrderResponse>> GetAllOrders()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("GetAllOrders Service starts");
+
+            //retrieves all orders from corresponding repository
+            var orders = await _ordersRepository.GetAllOrders();
+            var ordersResponse = orders.ToOrderResponseList();
+
+            //retrieves all List<OrderItem> with OrderResponse.OrderID & store the List to OrderItems Property of OrderResponse DTO
+
+            foreach (var orderResponse in ordersResponse)
+            {
+                orderResponse.OrderItems = await _orderItemsGetterService.GetOrderItemsByOrderID(orderResponse.OrderID);
+            }
+            _logger.LogInformation("GetAllOrders Service ends");
+
+            return ordersResponse;
         }
 
         public Task<OrderResponse>? GetOrderByOrderID(Guid orderID)
