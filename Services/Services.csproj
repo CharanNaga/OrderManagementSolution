@@ -11,8 +11,4 @@
     <ProjectReference Include="..\ServiceContracts\ServiceContracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="OrderItems\" />
-  </ItemGroup>
-
 </Project>
