@@ -86,9 +86,23 @@ namespace Repositories
             return order;
         }
 
-        public Task<Order> UpdateOrder(Order order)
+        public async Task<Order> UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            var matchingOrder = await _db.Orders.FindAsync(order.OrderID);
+            if (matchingOrder == null)
+            {
+                throw new ArgumentException($"Order with ID {order.OrderID} does not exist.");
+            }
+
+            matchingOrder.OrderNumber = order.OrderNumber;
+            matchingOrder.CustomerName = order.CustomerName;
+            matchingOrder.OrderDate = order.OrderDate;
+            matchingOrder.TotalAmount = order.TotalAmount;
+            await _db.SaveChangesAsync();
+
+            _logger.LogInformation("Order with ID {OrderID} updated in the database.", order.OrderID);
+
+            return matchingOrder;
         }
     }
 }
