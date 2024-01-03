@@ -32,7 +32,7 @@ namespace Entities.DTO
                 ProductName = orderItem.ProductName,
                 Quantity = orderItem.Quantity,
                 UnitPrice = orderItem.UnitPrice,
-                TotalPrice = orderItem.TotalPrice,
+                TotalPrice = orderItem.Quantity * orderItem.UnitPrice
             };
         }
     }
