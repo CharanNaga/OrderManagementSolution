@@ -36,9 +36,13 @@ builder.Services.AddScoped<IOrderItemsUpdaterService, OrderItemsUpdaterService>(
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
-
+else
+{
+    app.UseExceptionHandler("/error"); // Custom error handling endpoint
+    app.UseHsts(); //Enable HTTPS Strict Transport Security (HSTS) in non-development environments
+}
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
