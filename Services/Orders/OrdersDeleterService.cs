@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Entities;
+using Microsoft.Extensions.Logging;
 using RepositoryContracts;
 using ServiceContracts.Orders;
 using System;
@@ -20,9 +21,26 @@ namespace Services.Orders
             _logger = logger;
         }
 
-        public Task<bool> DeleteOrderByOrderID(Guid orderID)
+        public async Task<bool> DeleteOrderByOrderID(Guid orderID)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("DeleteOrderByOrderID Service starts");
+
+            //1. Delete matching object object by calling corresponding Repository Method
+            var isDeleted = await _ordersRepository.DeleteOrderByOrderID(orderID);
+
+            if (isDeleted)
+            {
+                _logger.LogInformation($"Order with ID {orderID} deleted successfully");
+            }
+            else
+            {
+                _logger.LogWarning($"Order with ID {orderID} not found");
+            }
+
+            _logger.LogInformation("DeleteOrderByOrderID Service ends");
+
+            //2. Return boolean value indicating order object was deleted or not
+            return isDeleted;
         }
     }
 }
