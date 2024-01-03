@@ -72,5 +72,25 @@ namespace OrderManagement.WebAPI.Controllers
 
             return CreatedAtAction(nameof(GetOrderByID), new { id = addedOrder.OrderID }, addedOrder);
         }
+
+        //PUT: api/orders/{orderID}
+        [HttpPut("{orderID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<OrderResponse>> UpdateOrder(Guid orderID, OrderUpdateRequest orderRequest)
+        {
+            _logger.LogInformation("UpdateOrder API starts");
+
+            if (orderID != orderRequest.OrderID)
+            {
+                _logger.LogWarning($"Mismatched ID between route parameter ({orderID}) and order request ({orderRequest.OrderID})");
+                return BadRequest();
+            }
+
+            var updatedOrder = await _ordersUpdaterService.UpdateOrder(orderRequest);
+            _logger.LogInformation("UpdateOrder API ends");
+
+            return Ok(updatedOrder);
+        }
     }
 }
