@@ -37,5 +37,28 @@ namespace OrderManagement.WebAPI.Controllers
 
             return Ok(orderItems);
         }
+
+        //GET: api/orders/{orderID}/items/{orderItemID}
+        [HttpGet("{orderItemID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<OrderItemResponse?>> GetOrderItemByOrderItemID(Guid orderItemID)
+        {
+            _logger.LogInformation("GetOrderItemByOrderItemID API starts");
+
+            var orderItem = await _orderItemsGetterService.GetOrderItemByOrderItemID(orderItemID);
+
+            if (orderItem == null)
+            {
+                _logger.LogWarning($"Order item not found for Order Item ID: {orderItemID}.");
+                return NotFound();
+            }
+
+            _logger.LogInformation("GetOrderItemByOrderItemID API ends");
+
+            return Ok(orderItem);
+        }
+
+
     }
 }
