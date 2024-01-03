@@ -62,9 +62,21 @@ namespace Services.OrderItems
             return orderItemResponse;
         }
 
-        public Task<List<OrderItemResponse>> GetOrderItemsByOrderID(Guid orderID)
+        public async Task<List<OrderItemResponse>> GetOrderItemsByOrderID(Guid orderID)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("GetOrderItemsByOrderID Service starts");
+
+            // Retrieve order items based on its Order ID from the Repository method
+            var orderItems = await _orderItemsRepository.GetOrderItemsByOrderID(orderID);
+
+            _logger.LogInformation("GetOrderItemsByOrderID Service ends");
+
+            //convert List<OrderItem> object to List<OrderItemResponse> object
+            var orderItemsResponse = orderItems.ToOrderItemResponseList();
+
+            //return List<OrderItemResponse> object
+            return orderItemsResponse;
+
         }
     }
 }
