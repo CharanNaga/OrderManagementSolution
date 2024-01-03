@@ -7,7 +7,7 @@ namespace OrderManagement.WebAPI.Controllers
 {
     [Route("api/orders/{orderID}/items")]
     [ApiController]
-    public class OrderItemsController : ControllerBase
+    public class OrderItemsController : ErrorController
     {
         private readonly IOrderItemsGetterService _orderItemsGetterService;
         private readonly IOrderItemsAdderService _orderItemsAdderService;
