@@ -66,9 +66,16 @@ namespace Repositories
             return orders;
         }
 
-        public Task<List<Order>> GetFilteredOrders(Expression<Func<Order, bool>> predicate)
+        public async Task<List<Order>> GetFilteredOrders(Expression<Func<Order, bool>> predicate)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Retrieving filtered orders...");
+
+            var filteredOrders = await _db.Orders.Where(predicate)
+                .OrderByDescending(temp => temp.OrderDate).ToListAsync();
+
+            _logger.LogInformation($"Retrieved {filteredOrders.Count} filtered orders successfully.");
+
+            return filteredOrders;
         }
 
         public async Task<Order?> GetOrderByOrderID(Guid orderID)
@@ -88,10 +95,12 @@ namespace Repositories
 
         public async Task<Order> UpdateOrder(Order order)
         {
+            _logger.LogInformation($"Updating order with OrderID: {order.OrderID}...");
             var matchingOrder = await _db.Orders.FindAsync(order.OrderID);
             if (matchingOrder == null)
             {
-                throw new ArgumentException($"Order with ID {order.OrderID} does not exist.");
+                _logger.LogWarning($"Order not found with ID: {order.OrderID}.");
+                return order;
             }
 
             matchingOrder.OrderNumber = order.OrderNumber;
