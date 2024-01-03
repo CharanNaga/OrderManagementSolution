@@ -27,6 +27,8 @@ namespace ServiceContracts.DTO
         [Column(TypeName = "decimal")]
         public decimal TotalAmount { get; set; }
 
+        public List<OrderItemAddRequest> OrderItems { get; set; } = new List<OrderItemAddRequest>();
+
         public Order ToOrder()
         {
             return new Order()
