@@ -70,7 +70,27 @@ namespace OrderManagement.WebAPI.Controllers
 
             _logger.LogInformation("AddOrderItem API ends");
 
-            return CreatedAtAction(nameof(GetOrderItemByOrderItemID), new { id = addedOrderItem.OrderItemID }, addedOrderItem);
+            return CreatedAtAction(nameof(GetOrderItemByOrderItemID), new { orderItemID = addedOrderItem.OrderItemID }, addedOrderItem);
+        }
+
+        //PUT: api/orders/{orderID}/items
+        [HttpPut("{orderItemID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<OrderItemResponse>> UpdateOrderItem(Guid orderItemID, OrderItemUpdateRequest orderItemRequest)
+        {
+            _logger.LogInformation("UpdateOrderItem API starts");
+            if (orderItemID != orderItemRequest.OrderItemID)
+            {
+                _logger.LogWarning($"Invalid Order Item ID in the request: {orderItemRequest.OrderItemID}.");
+                return BadRequest();
+            }
+
+            var updatedOrderItem = await _orderItemsUpdaterService.UpdateOrderItem(orderItemRequest);
+
+            _logger.LogInformation("UpdateOrderItem API ends");
+
+            return Ok(updatedOrderItem);
         }
 
     }
