@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RepositoryContracts;
 using System;
@@ -55,9 +56,14 @@ namespace Repositories
             return true;
         }
 
-        public Task<List<Order>> GetAllOrders()
+        public async Task<List<Order>> GetAllOrders()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Retrieving all Orders...");
+
+            var orders = await _db.Orders.OrderByDescending(temp => temp.OrderID).ToListAsync();
+
+            _logger.LogInformation($"Retrieved {orders.Count} orders successfully.");
+            return orders;
         }
 
         public Task<List<Order>> GetFilteredOrders(Expression<Func<Order, bool>> predicate)
