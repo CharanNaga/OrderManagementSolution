@@ -94,7 +94,8 @@ namespace Repositories
             var matchingOrderItem = await _db.OrderItems.FindAsync(orderItem.OrderItemID);
             if (matchingOrderItem == null)
             {
-                throw new ArgumentException($"Order item with ID {orderItem.OrderItemID} does not exist.");
+                _logger.LogWarning($"Order Item not found with ID: {orderItem.OrderItemID}.");
+                return orderItem;
             }
 
             matchingOrderItem.OrderID = orderItem.OrderID;
