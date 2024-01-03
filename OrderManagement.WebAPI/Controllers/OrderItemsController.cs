@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServiceContracts.DTO;
 using ServiceContracts.OrderItems;
 
 namespace OrderManagement.WebAPI.Controllers
@@ -23,6 +24,18 @@ namespace OrderManagement.WebAPI.Controllers
             _logger = logger;
         }
 
+        //GET : api/orders/{orderID}/items
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<OrderItemResponse>>> GetOrderItemsByOrderID(Guid orderID)
+        {
+            _logger.LogInformation("GetOrderItemsByOrderID API starts");
 
+            var orderItems = await _orderItemsGetterService.GetOrderItemsByOrderID(orderID);
+
+            _logger.LogInformation("GetOrderItemsByOrderID API ends");
+
+            return Ok(orderItems);
+        }
     }
 }
