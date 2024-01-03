@@ -21,9 +21,15 @@ namespace Services.OrderItems
             _logger = logger;
         }
 
-        public Task<List<OrderItemResponse>> GetAllOrderItems()
+        public async Task<List<OrderItemResponse>> GetAllOrderItems()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("GetAllOrderItems Service starts");
+
+            var orderItems = await _orderItemsRepository.GetAllOrderItems();
+
+            _logger.LogInformation("GetAllOrderItems Service ends");
+            var orderItemsResponse = orderItems.ToOrderItemResponseList();
+            return orderItemsResponse;
         }
 
         public Task<OrderItemResponse>? GetOrderItemByOrderItemID(Guid orderItemID)
