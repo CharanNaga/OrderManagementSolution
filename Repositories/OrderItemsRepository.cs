@@ -72,18 +72,21 @@ namespace Repositories
             var orderItem = await _db.OrderItems.FindAsync(orderItemID);
             if(orderItem == null)
             {
-                _logger.LogWarning($"Order item not found with ID: {orderItemID}.");
+                _logger.LogWarning($"Order Item not found with OrderItemID: {orderItemID}.");
             }
             else
             {
-                _logger.LogInformation("Order item retrieved successfully.");
+                _logger.LogInformation("Order Item retrieved successfully.");
             }
             return orderItem;
         }
 
-        public Task<List<OrderItem>> GetOrderItemsByOrderID(Guid orderID)
+        public async Task<List<OrderItem>> GetOrderItemsByOrderID(Guid orderID)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Retrieving Order Items by OrderID...");
+            var orderItems = await _db.OrderItems.Where(temp => temp.OrderID == orderID).ToListAsync();
+            _logger.LogInformation($"Retrieved {orderItems.Count} order items associated with OrderID: {orderID}.");
+            return orderItems;
         }
 
         public Task<OrderItem> UpdateOrderItem(OrderItem orderItem)
