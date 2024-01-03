@@ -21,9 +21,22 @@ namespace Services.Orders
             _logger = logger;
         }
 
-        public Task<OrderResponse> UpdateOrder(OrderUpdateRequest orderUpdateRequest)
+        public async Task<OrderResponse> UpdateOrder(OrderUpdateRequest orderUpdateRequest)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("UpdateOrder Service starts");
+            //1. convert orderUpdateRequest to Order type
+            var order = orderUpdateRequest.ToOrder();
+
+            //2. call corresponding Repository method & store it in a variable
+            var updatedOrder = await _ordersRepository.UpdateOrder(order);
+
+            //3. convert Order to OrderResponse type
+            var updatedOrderResponse = updatedOrder.ToOrderResponse();
+
+            _logger.LogInformation("UpdateOrder Service ends");
+
+            //4. return the OrderResponse Object
+            return updatedOrderResponse;
         }
     }
 }
