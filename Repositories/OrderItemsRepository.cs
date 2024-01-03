@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Microsoft.Extensions.Logging;
 using RepositoryContracts;
@@ -55,9 +56,14 @@ namespace Repositories
             return true;
         }
 
-        public Task<List<OrderItem>> GetAllOrderItems()
+        public async Task<List<OrderItem>> GetAllOrderItems()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Retrieving all order items...");
+
+            var orderItems = await _db.OrderItems.OrderByDescending(temp=>temp.OrderID).ToListAsync();
+
+            _logger.LogInformation($"Retrieved {orderItems.Count} order items successfully.");
+            return orderItems;
         }
 
         public Task<OrderItem>? GetOrderItemByOrderItemID(Guid orderItemID)
