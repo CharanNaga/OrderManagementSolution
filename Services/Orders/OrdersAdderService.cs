@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Entities;
+using Microsoft.Extensions.Logging;
 using RepositoryContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.Orders;
@@ -23,9 +24,33 @@ namespace Services.Orders
             _logger = logger;
         }
 
-        public Task<OrderResponse> AddOrder(OrderAddRequest request)
+        public async Task<OrderResponse> AddOrder(OrderAddRequest orderAddRequest)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("AddOrder Service starts");
+
+            //1. Convert orderAddRequest to Order type
+            Order order = orderAddRequest.ToOrder();
+
+            //2. Generate a new OrderID
+            order.OrderID = Guid.NewGuid();
+
+            //3. Then add it to the Repository
+            var addedOrder = await _ordersRepository.AddOrder(order);
+            var addedOrderResponse = addedOrder.ToOrderResponse();
+
+            foreach (var item in orderAddRequest.OrderItems)
+            {
+                var orderItem = item.ToOrderItem();
+                orderItem.OrderItemID = Guid.NewGuid();
+                orderItem.OrderID = addedOrder.OrderID;
+
+                var addedOrderItem = await _orderItemsRepository.AddOrderItem(orderItem);
+                addedOrderResponse.OrderItems.Add(addedOrderItem.ToOrderItemResponse()); //Adding OrderItems from OrderAddRequest to OrderResponse
+            }
+            _logger.LogInformation("AddOrder Service ends");
+
+            //4. Return OrderResponse Object
+            return addedOrderResponse;
         }
     }
 }
