@@ -34,7 +34,7 @@ namespace Entities
         [Column(TypeName = "decimal")]
         public decimal TotalPrice { get; set; }
 
-        [ForeignKey(nameof(OrderID))]
-        public virtual Order? Order { get; set; }
+        //[ForeignKey(nameof(OrderID))]
+        //public virtual Order? Order { get; set; }
     }
 }
