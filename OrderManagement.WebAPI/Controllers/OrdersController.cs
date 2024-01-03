@@ -93,6 +93,7 @@ namespace OrderManagement.WebAPI.Controllers
             return Ok(updatedOrder);
         }
 
+        //DELETE : api/orders/{orderID}
         [HttpDelete("{orderID}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
