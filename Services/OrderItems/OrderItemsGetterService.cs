@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Entities;
+using Microsoft.Extensions.Logging;
 using RepositoryContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.OrderItems;
@@ -25,16 +26,40 @@ namespace Services.OrderItems
         {
             _logger.LogInformation("GetAllOrderItems Service starts");
 
+            // Retrieve all order items from the repository
             var orderItems = await _orderItemsRepository.GetAllOrderItems();
 
             _logger.LogInformation("GetAllOrderItems Service ends");
+
+            //convert order items into List<OrderItemResponse>
             var orderItemsResponse = orderItems.ToOrderItemResponseList();
+
+            //return List<OrderItemResponse> object
             return orderItemsResponse;
         }
 
-        public Task<OrderItemResponse>? GetOrderItemByOrderItemID(Guid orderItemID)
+        public async Task<OrderItemResponse?> GetOrderItemByOrderItemID(Guid orderItemID)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("GetOrderItemByOrderItemID Service starts");
+
+            // Retrieve an order item based on its Order Item ID from the Repository method
+            var orderItem = await _orderItemsRepository.GetOrderItemByOrderItemID(orderItemID);
+
+            if (orderItem == null)
+            {
+                _logger.LogWarning($"Order item not found for Order Item ID: {orderItemID}.");
+            }
+            else
+            {
+                _logger.LogInformation($"Order item retrieved successfully. Order Item ID: {orderItemID}.");
+            }
+            _logger.LogInformation("GetOrderItemByOrderItemID Service ends");
+
+            // Convert the OrderItem object to OrderItemResponse object
+            var orderItemResponse =  orderItem?.ToOrderItemResponse();
+
+            //return OrderItemResponse object
+            return orderItemResponse;
         }
 
         public Task<List<OrderItemResponse>> GetOrderItemsByOrderID(Guid orderID)
