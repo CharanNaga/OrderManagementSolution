@@ -21,9 +21,23 @@ namespace Services.OrderItems
             _logger = logger;
         }
 
-        public Task<OrderResponse> UpdateOrderItem(OrderItemUpdateRequest orderItemUpdateRequest)
+        public async Task<OrderItemResponse> UpdateOrderItem(OrderItemUpdateRequest orderItemUpdateRequest)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("UpdateOrderItem Service starts");
+
+            //1. convert orderItemUpdateRequest to OrderItem type
+            var orderItem = orderItemUpdateRequest.ToOrderItem();
+
+            //2. call corresponding Repository method & store it in a variable
+            var updatedOrderItem = await _orderItemsRepository.UpdateOrderItem(orderItem);
+
+            //3. convert OrderItem to OrderItemResponse type
+            var updatedOrderItemResponse = updatedOrderItem.ToOrderItemResponse();
+
+            _logger.LogInformation("UpdateOrderItem Service ends");
+
+            //4. return the OrderResponse Object
+            return updatedOrderItemResponse;
         }
     }
 }
