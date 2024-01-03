@@ -32,9 +32,27 @@ namespace Repositories
             return order;
         }
 
-        public Task<bool> DeleteOrderByOrderID(Guid orderID)
+        public async Task<bool> DeleteOrderByOrderID(Guid orderID)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Deleting an Order from the database");
+
+            //_db.Orders.RemoveRange(
+            //    _db.Orders.Where(
+            //        temp=> temp.OrderID == orderID
+            //        ));
+            //int rowsDeleted = await _db.SaveChangesAsync();
+            //return rowsDeleted > 0;
+
+            var order = await _db.Orders.FindAsync(orderID);
+            if (order == null)
+            {
+                _logger.LogWarning($"Order not found with ID: {orderID}.");
+                return false;
+            }
+            _db.Orders.Remove(order);
+            await _db.SaveChangesAsync();
+            _logger.LogInformation("Order with ID {OrderID} deleted from the database.", orderID);
+            return true;
         }
 
         public Task<List<Order>> GetAllOrders()
