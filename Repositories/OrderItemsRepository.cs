@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Microsoft.Extensions.Logging;
 using RepositoryContracts;
 using System;
@@ -31,9 +32,27 @@ namespace Repositories
             return orderItem;
         }
 
-        public Task<bool> DeleteOrderItemByOrderItemID(Guid orderItemID)
+        public async Task<bool> DeleteOrderItemByOrderItemID(Guid orderItemID)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Deleting an Order Item from the database");
+
+            //_db.OrderItems.RemoveRange(
+            //    _db.OrderItems.Where(
+            //        temp=> temp.OrderItemID == orderItemID
+            //        ));
+            //int rowsDeleted = await _db.SaveChangesAsync();
+            //return rowsDeleted > 0;
+
+            var orderItem = await _db.OrderItems.FindAsync(orderItemID);
+            if (orderItem == null)
+            {
+                _logger.LogWarning($"Order item not found with ID: {orderItemID}.");
+                return false;
+            }
+            _db.OrderItems.Remove(orderItem);
+            await _db.SaveChangesAsync();
+            _logger.LogInformation("Order item with ID {OrderItemId} deleted from the database.", orderItemID);
+            return true;
         }
 
         public Task<List<OrderItem>> GetAllOrderItems()
