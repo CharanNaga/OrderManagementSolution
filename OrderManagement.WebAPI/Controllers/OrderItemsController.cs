@@ -7,7 +7,7 @@ namespace OrderManagement.WebAPI.Controllers
 {
     [Route("api/orders/{orderID}/items")]
     [ApiController]
-    public class OrderItemsController : ErrorController
+    public class OrderItemsController : ControllerBase
     {
         private readonly IOrderItemsGetterService _orderItemsGetterService;
         private readonly IOrderItemsAdderService _orderItemsAdderService;
@@ -70,7 +70,7 @@ namespace OrderManagement.WebAPI.Controllers
 
             _logger.LogInformation("AddOrderItem API ends");
 
-            return CreatedAtAction(nameof(GetOrderItemByOrderItemID), new { orderItemID = addedOrderItem.OrderItemID }, addedOrderItem);
+            return CreatedAtAction(nameof(GetOrderItemByOrderItemID), new{ orderItemID = addedOrderItem.OrderItemID },addedOrderItem);
         }
 
         //PUT: api/orders/{orderID}/items/{orderItemID}

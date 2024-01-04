@@ -7,7 +7,7 @@ namespace OrderManagement.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ErrorController
+    public class OrdersController : ControllerBase
     {
         private readonly IOrdersAdderService _ordersAdderService;
         private readonly IOrdersGetterService _ordersGetterService;
@@ -24,7 +24,7 @@ namespace OrderManagement.WebAPI.Controllers
             _logger = logger;
         }
 
-        // GET : api/Orders
+        // GET : api/orders
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<OrderResponse>>> GetAllOrders()
