@@ -9,6 +9,6 @@ namespace ServiceContracts.OrderItems
 {
     public interface IOrderItemsUpdaterService
     {
-        Task<OrderResponse> UpdateOrderItem(OrderItemUpdateRequest orderItemUpdateRequest);
+        Task<OrderItemResponse> UpdateOrderItem(OrderItemUpdateRequest orderItemUpdateRequest);
     }
 }
