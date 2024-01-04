@@ -11,6 +11,6 @@ namespace ServiceContracts.OrderItems
     {
         Task<List<OrderItemResponse>> GetAllOrderItems();
         Task<List<OrderItemResponse>> GetOrderItemsByOrderID(Guid orderID);
-        Task<OrderItemResponse>? GetOrderItemByOrderItemID(Guid orderItemID);
+        Task<OrderItemResponse?> GetOrderItemByOrderItemID(Guid orderItemID);
     }
 }
