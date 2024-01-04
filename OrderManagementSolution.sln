@@ -13,6 +13,26 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryContracts", "Repo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{A5E967ED-0743-4A2F-AF86-EDC7DDDF9300}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{6B578822-33F9-4179-B8C8-6B072ADDE2C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{0BA92AA1-E4E8-4194-A2F0-9B094E3102CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{786D8D48-1728-4B2A-9955-6C4BAB36522D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryContracts", "RepositoryContracts\RepositoryContracts.csproj", "{7C7D0D65-0CF0-4888-8006-1EDD6ACD5AA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{A5E967ED-0743-4A2F-AF86-EDC7DDDF9300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{6B578822-33F9-4179-B8C8-6B072ADDE2C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{0BA92AA1-E4E8-4194-A2F0-9B094E3102CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{786D8D48-1728-4B2A-9955-6C4BAB36522D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryContracts", "RepositoryContracts\RepositoryContracts.csproj", "{7C7D0D65-0CF0-4888-8006-1EDD6ACD5AA1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{A5E967ED-0743-4A2F-AF86-EDC7DDDF9300}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{6B578822-33F9-4179-B8C8-6B072ADDE2C1}"
 EndProject
 Global
