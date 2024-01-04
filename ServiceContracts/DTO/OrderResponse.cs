@@ -16,6 +16,7 @@ namespace ServiceContracts.DTO
         public string? CustomerName { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
+        public List<OrderItemResponse> OrderItems { get; set; } = new List<OrderItemResponse>();
     }
     public static class OrderExtensions
     {
@@ -29,6 +30,16 @@ namespace ServiceContracts.DTO
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount
             };
+        }
+
+        public static List<OrderResponse> ToOrderResponseList(this List<Order> orders)
+        {
+            var orderResponses = new List<OrderResponse>();
+            foreach (var order in orders)
+            {
+                orderResponses.Add(order.ToOrderResponse());
+            }
+            return orderResponses;
         }
     }
 }
