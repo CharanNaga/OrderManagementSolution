@@ -5,15 +5,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
-namespace Entities.DTO
+namespace ServiceContracts.DTO
 {
-    public class OrderUpdateRequest
+    public class OrderAddRequest
     {
-        public Guid OrderID { get; set; }
-
         [Required(ErrorMessage = "Order Number can't be blank")]
-        [RegularExpression(@"^(?i)ORD_\d{4}_\d+$\r\n", ErrorMessage = "Order Number should begin with 'ORD' followed by an underscore (_) and a sequential number.")]
+        [RegularExpression(@"^(?i)ORD_\d{4}_\d+$", ErrorMessage = "Order Number should begin with 'ORD' followed by an underscore (_) and a sequential number.")]
         public string? OrderNumber { get; set; }
 
         [Required(ErrorMessage = "Customer Name can't be blank")]
@@ -28,11 +27,12 @@ namespace Entities.DTO
         [Column(TypeName = "decimal")]
         public decimal TotalAmount { get; set; }
 
+        public List<OrderItemAddRequest> OrderItems { get; set; } = new List<OrderItemAddRequest>();
+
         public Order ToOrder()
         {
             return new Order()
             {
-                OrderID = OrderID,
                 OrderNumber = OrderNumber,
                 CustomerName = CustomerName,
                 OrderDate = OrderDate,

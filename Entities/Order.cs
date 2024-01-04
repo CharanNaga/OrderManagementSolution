@@ -9,7 +9,7 @@ namespace Entities
         public Guid OrderID { get; set; }
 
         [Required(ErrorMessage ="Order Number can't be blank")]
-        [RegularExpression(@"^(?i)ORD_\d{4}_\d+$\r\n", ErrorMessage = "Order Number should begin with 'ORD' followed by an underscore (_) and a sequential number.")] 
+        [RegularExpression(@"^(?i)ORD_\d{4}_\d+$", ErrorMessage = "Order Number should begin with 'ORD' followed by an underscore (_) and a sequential number.")] 
         public string? OrderNumber { get; set; }
 
         [Required(ErrorMessage ="Customer Name can't be blank")]

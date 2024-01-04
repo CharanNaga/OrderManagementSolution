@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
-namespace Entities.DTO
+namespace ServiceContracts.DTO
 {
-    public class OrderItemUpdateRequest
+    public class OrderItemAddRequest
     {
-        public Guid OrderItemID { get; set; }
         public Guid OrderID { get; set; }
 
         [Required(ErrorMessage = "Product Name can't be blank")]
@@ -31,8 +31,7 @@ namespace Entities.DTO
         public OrderItem ToOrderItem()
         {
             return new OrderItem()
-            {
-                OrderItemID = OrderItemID,
+            { 
                 OrderID = OrderID,
                 ProductName = ProductName,
                 Quantity = Quantity,

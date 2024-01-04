@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
-namespace Entities.DTO
+namespace ServiceContracts.DTO
 {
     public class OrderItemResponse
     {
@@ -34,6 +35,15 @@ namespace Entities.DTO
                 UnitPrice = orderItem.UnitPrice,
                 TotalPrice = orderItem.Quantity * orderItem.UnitPrice
             };
+        }
+        public static List<OrderItemResponse> ToOrderItemResponseList(this List<OrderItem> orderItems)
+        {
+            var orderItemResponses = new List<OrderItemResponse>();
+            foreach (var orderItem in orderItems)
+            {
+                orderItemResponses.Add(orderItem.ToOrderItemResponse());
+            }
+            return orderItemResponses;
         }
     }
 }

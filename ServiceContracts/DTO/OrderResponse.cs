@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
-namespace Entities.DTO
+namespace ServiceContracts.DTO
 {
     public class OrderResponse
     {
@@ -15,6 +16,7 @@ namespace Entities.DTO
         public string? CustomerName { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
+        public List<OrderItemResponse> OrderItems { get; set; } = new List<OrderItemResponse>();
     }
     public static class OrderExtensions
     {
@@ -28,6 +30,16 @@ namespace Entities.DTO
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount
             };
+        }
+
+        public static List<OrderResponse> ToOrderResponseList(this List<Order> orders)
+        {
+            var orderResponses = new List<OrderResponse>();
+            foreach (var order in orders)
+            {
+                orderResponses.Add(order.ToOrderResponse());
+            }
+            return orderResponses;
         }
     }
 }
