@@ -36,5 +36,14 @@ namespace ServiceContracts.DTO
                 TotalPrice = orderItem.Quantity * orderItem.UnitPrice
             };
         }
+        public static List<OrderItemResponse> ToOrderItemResponseList(this List<OrderItem> orderItems)
+        {
+            var orderItemResponses = new List<OrderItemResponse>();
+            foreach (var orderItem in orderItems)
+            {
+                orderItemResponses.Add(orderItem.ToOrderItemResponse());
+            }
+            return orderItemResponses;
+        }
     }
 }
