@@ -12,7 +12,7 @@ namespace ServiceContracts.DTO
     public class OrderAddRequest
     {
         [Required(ErrorMessage = "Order Number can't be blank")]
-        [RegularExpression(@"^(?i)ORD_\d{4}_\d+$\r\n", ErrorMessage = "Order Number should begin with 'ORD' followed by an underscore (_) and a sequential number.")]
+        [RegularExpression(@"^(?i)ORD_\d{4}_\d+$", ErrorMessage = "Order Number should begin with 'ORD' followed by an underscore (_) and a sequential number.")]
         public string? OrderNumber { get; set; }
 
         [Required(ErrorMessage = "Customer Name can't be blank")]
@@ -26,6 +26,8 @@ namespace ServiceContracts.DTO
         [Range(0, double.MaxValue, ErrorMessage = "Total Amount must be positive")]
         [Column(TypeName = "decimal")]
         public decimal TotalAmount { get; set; }
+
+        public List<OrderItemAddRequest> OrderItems { get; set; } = new List<OrderItemAddRequest>();
 
         public Order ToOrder()
         {

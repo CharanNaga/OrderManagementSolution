@@ -13,7 +13,7 @@ namespace RepositoryContracts
         Task<OrderItem> AddOrderItem(OrderItem orderItem);
         Task<List<OrderItem>> GetAllOrderItems();
         Task<List<OrderItem>> GetOrderItemsByOrderID(Guid orderID);
-        Task<OrderItem>? GetOrderItemByOrderItemID(Guid orderItemID);
+        Task<OrderItem?> GetOrderItemByOrderItemID(Guid orderItemID);
         Task<OrderItem> UpdateOrderItem(OrderItem orderItem);
         Task<bool> DeleteOrderItemByOrderItemID(Guid orderItemID);
     }

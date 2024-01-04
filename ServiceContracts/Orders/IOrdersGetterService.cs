@@ -10,6 +10,6 @@ namespace ServiceContracts.Orders
     public interface IOrdersGetterService
     {
         Task<List<OrderResponse>> GetAllOrders();
-        Task<OrderResponse>? GetOrderByOrderID(Guid orderID);
+        Task<OrderResponse?> GetOrderByOrderID(Guid orderID);
     }
 }
